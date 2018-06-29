@@ -8,14 +8,15 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">TV Schedule</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          TV Schedule for shows on Nick and Nick Jr.
         </p>
+        <button onclick = "App-button">Nick Jr. Channel</button>
+        <button onclick = "App-button">Nick Channel</button>
       </div>
     );
   }
 }
-
 export default App;
