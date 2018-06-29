@@ -8,14 +8,13 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">TV Schedule</h1>
+          <h2 className="App-title">What's on Today: </h2>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <button className = "App-button">Nick Jr. Channel</button>
+        <button className = "App-button2">Nick Channel</button>
       </div>
     );
   }
 }
-
 export default App;
