@@ -1,28 +1,151 @@
-.App {
-  text-align: center;
+.App 
+{
+  text-align: left;
+  font-family: 'Lucida Sans';
 }
 
-.App-logo {
+.App-button 
+{
+  background-color: rgb(23, 166, 209) ;
+  height: 65px;
+  width: 50%;
+  float: left;
+  padding: 20px;
+  font-weight: 100;
+  font-family: 'Lucida Sans';
+  font-size: large;
+  color: white;
+  border: black;
+}
+
+.App-button:hover 
+{
+  background-color:blue
+}
+
+.App-button:active 
+{
+  background-color: blue;
+  transform: translateY(4px);
+}
+
+.App-button2 
+{
+  background-color: rgb(23, 166, 209) ;
+  height: 65px;
+  width: 50%;
+  float: right;
+  padding: 20px;
+  font-weight: 100;
+  font-family: 'Lucida Sans';
+  font-size: large;
+  color: white;
+  border:black;
+}
+
+.App-button2:hover 
+{
+  background-color:blue
+}
+
+.App-button2:active 
+{
+  background-color: blue;
+  transform: translateY(4px);
+}
+
+.App-logo 
+{
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
+.App-header 
+{
+  background-color: rgb(253, 64, 6);
+  height: 200px;
   padding: 20px;
   color: white;
+  text-align: center;
 }
 
-.App-title {
-  font-size: 1.5em;
+.data-and-time.min.js
+{
+  font-size: 3em;
 }
 
-.App-intro {
+.App-title 
+{
+  font-size: 2.5em;
+}
+
+.App-intro 
+{
   font-size: large;
 }
+/* Dropdown Button */
+.dropbtn 
+{
+  background-color: rgb(111, 112, 111);
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+/* The container <div> - needed to position the dropdown content */
+.dropdown 
+{
+  position: relative;
+  display: inline-block;
+}
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content 
+{
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+/* Links inside the dropdown */
+.dropdown-content a 
+{
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover 
+{
+  background-color: #ddd;
+}
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content 
+{
+  display: block;
+}
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn 
+{
+  background-color: rgb(13, 162, 111);
+  opacity: .8;
+}
+.smallImg
+{
+float: left;
+width: 200px;
+height: 200px;
+}
+.dropbtn
+{
+height: 230px;
+width: 1650px;
+}
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.dropdown-content
+{
+font-family: 'Lucida Sans';
+font-size: 1.2em;
 }
