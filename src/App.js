@@ -1,80 +1,65 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import date from 'date-and-time';
+import schedule from './schedule.json'
+//schedule.title
+console.log(schedule);
 
 class App extends Component {
+//this gets the date and time through a component
+  getDate(){
+    let now = new Date();
+    return date.format(now, 'ddd MMM DD YYYY hh:mm');
+  }
+  //this gets the data
+//const loadJsonFile =  require('schedule');
+//loadJsonFile('schedule.json').then(json => {
+//console.log(json);
+//});
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">TV Schedule</h1>
+          <h2 className="data-and-time.min.js">What's on Today: {this.getDate()}. All times are ET</h2>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-  //code for dropdown
-  /*  constructor() {
-    super();
-    
-    this.state = {
-      showMenu: false,
-    };
-    
-    this.showMenu = this.showMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
-  }
-  
-  showMenu(event) {
-    event.preventDefault();
-    
-    this.setState({ showMenu: true }, () => {
-      document.addEventListener('click', this.closeMenu);
-    });
-  }
-  
-  closeMenu(event) {
-    
-    if (!this.dropdownMenu.contains(event.target)) {
-      
-      this.setState({ showMenu: false }, () => {
-        document.removeEventListener('click', this.closeMenu);
-      });  
-      
-    }
-  }
+        <button className = "App-button">Nick Jr. Channel</button>
+        <button className = "App-button2">Nick Channel</button>
+        <ul>{
+          schedule.channels.map(function(channel){
+            
+            return (
+              <React.Fragment>
+                
+                {
+                  channel.schedule.map(function(episode){
+                    return (
+                    <li> 
+                    <div class="dropdown">
+                      <button class="dropbtn">
+                      <img className= "smallImg" src={episode.icon1x1}></img>
+                      <div><h1>Series Title: {episode.seriesTitle} </h1></div>
+                      <div><h1>Episode Title: {episode.episodeTitle}</h1> </div>
+                      <div>{episode.isOver}</div>
+                      </button>
+                      <div class="dropdown-content">
+                        <a><div>{episode.description}</div>
+                         <div>{episode.formattedTime + ' ' +episode.meridiem} </div>
+                         </a>
 
-  render() {
-    return (
-      <div>
-        <button onClick={this.showMenu}>
-          Show me
-        </button>
-        
-        {
-          this.state.showMenu
-            ? (
-              <div
-                className="menu"
-                ref={(element) => {
-                  this.dropdownMenu = element;
-                }}
-              >
-                <button> Menu item 1 </button>
-                <button> Menu item 2 </button>
-                <button> Menu item 3 </button>
-              </div>
-            )
-            : (
-              null
-            )
-        }
+                      </div>
+                      </div>
+                    </li>)
+                  })
+                }
+              </React.Fragment>
+          )
+          })}
+        </ul>
       </div>
     );
-  }*/
+  }
 }
-
 export default App;
+
