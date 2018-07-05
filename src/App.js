@@ -1,90 +1,111 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import date from 'date-and-time';
-import schedule from './schedule.json'
-//schedule.title
-console.log(schedule);
-
+import head from './splat-banner.png';
+import noPic from './fallbacks-1x1.jpg';
 
 class App extends Component {
- //this gets the date and time through a component
+  constructor(props) {
+    super(props);
+    this.state = {
+      nickData: [],
+      nickjrData: [],
+      currentChannel: 'nickjr'
+    };
+  }
+  //this gets the date and time through a component
   getDate(){
     let now = new Date();
-    return date.format(now, 'ddd MMM DD YYYY hh:mm');
+    return date.format(now, 'dddd MMM DD YYYY hh:mm A');
   }
-  //this gets the data
-//const loadJsonFile =  require('schedule');
-//loadJsonFile('schedule.json').then(json => {
-//console.log(json);
-//});
+
+  updateCurrentChannel(currentChannel){
+    if (this.state.currentChannel === currentChannel) {
+      return
+    }
+    this.setState({
+      currentChannel
+    })
+  }
+
+  componentDidMount() {
+   fetch('https://gist.githubusercontent.com/sejalmehra/8b457925942ad4f218c1c68240e73592/raw/ea1c4a2ffcc0a6092bf1a79b3aa45749c2aae66e/data.json')
+     .then(res => res.json())
+     .then(data => {
+        const nickData = data.channels.find(channel => {
+          return channel.key === 'schedule.nick'
+        })
+        const nickjrData = data.channels.find(channel => {
+          return channel.key === 'schedule.nickjr'
+        })
+        this.setState({
+          nickData: nickData.schedule,
+          nickjrData: nickjrData.schedule
+        })
+      })
+  }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">TV Schedule</h1>
-          <h2 className="data-and-time.min.js">What's on Today: {this.getDate()}. All times are ET</h2>
+        <img src={head} className="App-head" align="center" alt="head"/>
+          <h1 className="App-title">TV Schedule for Nick Jr. and Nick</h1>
+          <h2 className="date-and-time-header">What's on Today: {this.getDate()} All times are ET</h2>
         </header>
-        <button className = "App-button">Nick Jr. Channel</button>
-        <button className = "App-button2">Nick Channel</button>
-        <ul>{
-          schedule.channels.map(function(channel){
-            
-            return (
-              <React.Fragment>
-                <li>{channel.id}-{channel.title}</li>
-                {
-                  channel.schedule.map(function(episode){
-                    return (
-                    <li>
-                    <div>{episode.seriesUrlKey} </div>
-                    <div>{episode.seriesTitle} </div>
-                    <div>{episode.episodeTitle} </div>
-                    <div>{episode.description} </div>
-                    <div>{episode.formattedTime + ' ' +episode.meridiem} </div>
-                    <div>{episode.icon1x1}</div>
-                    <div>{episode.icon16x9}</div>
-                    <div>{episode.airTime}</div>
-                    <div>{episode.isOver}</div>
-                    </li>)
-                  })
-                }
-              </React.Fragment>
-            )
-          })}
-        </ul>
-        
-        <u2>
-        {
-          schedule.channels.map(function(channel){ 
-            return (
-              <React.Fragment>
-                <li>{channel.id}-{channel.title}</li>
-                {
-                  channel.schedule.map(function(episodeA){
-                    return (
-                    <li>
-                    <div>{episodeA.seriesUrlKey} </div>
-                    <div>{episodeA.seriesTitle} </div>
-                    <div>{episodeA.episodeTitle} </div>
-                    <div>{episodeA.description} </div>
-                    <div>{episodeA.formattedTime + ' ' +episodeA.meridiem} </div>
-                    <div>{episodeA.icon1x1}</div>
-                    <div>{episodeA.icon16x9}</div>
-                    <div>{episodeA.airTime}</div>
-                    <div>{episodeA.isOver}</div>
-                    </li>)
-                  })
-                }
-              </React.Fragment>
-            )
-          })}
-        </u2>
 
+        <button className = "App-button"
+          onClick = {
+            () => { 
+              this.updateCurrentChannel("nickjr")
+            }
+          }
+        >Nick Jr. Channel</button>
+
+        <button className = "App-button2"
+          onClick = {
+            () => { 
+              this.updateCurrentChannel("nick")
+            }
+          }
+        >Nick Channel</button>
+        <ul className='tv-schedule-list'>
+          {
+            this.state.currentChannel === 'nick' &&
+            <Information schedule={this.state.nickData} />
+          }
+          {
+            this.state.currentChannel === 'nickjr' &&
+            <Information schedule={this.state.nickjrData} />
+          }
+        </ul>
       </div>
     );
   }
 }
+
+class Information extends Component {
+  render() {
+    return this.props.schedule.map((episode) => {
+      return (
+      <li key= {episode.episodeTitle + episode.formattedTime}> {
+      <div className="dropdown">
+        <button className="dropbtn">
+        <img className= "smallImg" src={episode.icon1x1 || noPic}></img>
+        <div><h1 className="series">Series: {episode.seriesTitle} </h1> </div>
+        <div><h2>Episode: {episode.episodeTitle}</h2> </div>
+        <div><h3> {episode.description}</h3> </div>
+        <div>{episode.isOver}</div>
+        </button>
+        <div className="dropdown-content">
+          <a>
+           <div>{episode.formattedTime + ' ' +episode.meridiem} </div>
+           </a>
+        </div>
+        </div>
+       } </li>)
+    })
+  }
+}
+
 export default App;
